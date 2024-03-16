@@ -17,8 +17,6 @@ export default function Board() {
 
   function handleClick(i) {
 
-    calculateWinner(i)
-
     if(squares[i]) {
       return;
     }
@@ -29,7 +27,8 @@ export default function Board() {
       nextSquares[i] = "O";
     }
     setSquares(nextSquares);
-    setXIsNext(!xIsNext)
+    calculateWinner(i, nextSquares);
+    setXIsNext(!xIsNext);
   }
 
   return (
@@ -125,48 +124,55 @@ export default function Board() {
   </>
   );
 
-  function calculateWinner(squares) {
+  function calculateWinner(currSquare , squares) {
 
-    const linesDIR = [];
-    const linesESQ = [];
-    const linesMID = [];
-    const linesI = [];
+    var linesDIR = [];
+    var linesESQ = [];
+    var linesMID = [];
+    var linesI = [];
 
-    if (!DIR.includes(squares)) {
+    if (!DIR.includes(currSquare)) {
        linesDIR = [
-        [squares, squares - 5, squares - 10], {/* ./ */}
-        [squares, squares + 1, squares + 2],  {/* .- */}
-        [squares, squares + 7, squares + 14], {/* .\ */}
+        [currSquare, currSquare - 5, currSquare - 10], 
+        [currSquare, currSquare + 1, currSquare + 2],  
+        [currSquare, currSquare + 7, currSquare + 14], 
       ];
     }
-    if(!ESQ.includes(squares)) {
+    if(!ESQ.includes(currSquare)) {
        linesESQ = [
-        [squares, squares - 7, squares - 14], {/* \. */}
-        [squares, squares - 1, squares - 2],  {/* -. */}
-        [squares, squares + 5, squares + 10], {/* /. */}
+        [currSquare, currSquare - 7, currSquare - 14], 
+        [currSquare, currSquare - 1, currSquare - 2], 
+        [currSquare, currSquare + 5, currSquare + 10], 
       ];
     }
 
-    if(!MID.includes(squares)) {
+    if(!MID.includes(currSquare)) {
        linesMID = [
-        [squares, squares + 1, squares - 1],  {/* - */}
-        [squares, squares + 5, squares - 5],  {/* / */}
-        [squares, squares + 7, squares - 7],  {/* \ */}
+        [currSquare, currSquare + 1, currSquare - 1],  
+        [currSquare, currSquare + 5, currSquare - 5], 
+        [currSquare, currSquare + 7, currSquare - 7],  
       ];
     }
 
      linesI = [
-      [squares, squares - 6, squares - 6],  {/* | */}
-      [squares, squares + 6, squares - 6],  {/* | */}
-      [squares, squares + 6, squares + 6],  {/* | */}
+      [currSquare, currSquare - 6, currSquare - 6],  
+      [currSquare, currSquare + 6, currSquare - 6],  
+      [currSquare, currSquare + 6, currSquare + 6],  
     ];
 
     if (linesDIR.length) {
       for (let i = 0; i < linesDIR.length; i++) {
         
-        const [a, b, c] = linesDIR[i];
-        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-          return squares[a];
+        var [a, b, c] = linesDIR[i];
+
+        var allOK = [a , b , c].every(function(number) {
+          return number > 0 && number < 36;
+        });
+
+        if (allOK) {
+          if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+          }
         }
       }
       return null;
@@ -175,32 +181,53 @@ export default function Board() {
     if (linesESQ.length) {
       for (let i = 0; i < linesESQ.length; i++) {
         
-        const [a, b, c] = linesESQ[i];
-        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-          return squares[a];
+        var [a, b, c] = linesESQ[i];
+
+        var allOK = [a , b , c].every(function(number) {
+          return number > 0 && number < 36;
+        });
+
+        if (allOK) {
+          if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+          }
         }
       }
       return null;
     }
 
-    if (linesDIR.length) {
-      for (let i = 0; i < linesDIR.length; i++) {
+    if (linesMID.length) {
+      for (let i = 0; i < linesMID.length; i++) {
         
-        const [a, b, c] = linesDIR[i];
-        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-          return squares[a];
+        var [a, b, c] = linesMID[i];
+
+        var allOK = [a , b , c].every(function(number) {
+          return number > 0 && number < 36;
+        });
+
+        if (allOK) {
+          if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+          }
         }
       }
       return null;
     }
 
-    for (let i = 0; i < linesDIR.length; i++) {
+      for (let i = 0; i < linesI.length; i++) {
         
-      const [a, b, c] = linesDIR[i];
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a];
+        var [a, b, c] = linesI[i];
+
+        var allOK = [a , b , c].every(function(number) {
+          return number > 0 && number < 36;
+        });
+
+        if (allOK) {
+          if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+          }
+        }
       }
-    }
-    return null;
+      return null;
   }
 }
