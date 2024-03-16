@@ -78,4 +78,111 @@ export default function Board() {
     </div>
   </>
   );
+
+  function calculateWinner(currSquare , squares) {
+
+    var linesDIR = [];
+    var linesESQ = [];
+    var linesMID = [];
+    var linesI = [];
+
+    if (!DIR.includes(currSquare)) {
+       linesDIR = [
+        [currSquare, currSquare - 5, currSquare - 10], 
+        [currSquare, currSquare + 1, currSquare + 2],  
+        [currSquare, currSquare + 7, currSquare + 14], 
+      ];
+    }
+    if(!ESQ.includes(currSquare)) {
+       linesESQ = [
+        [currSquare, currSquare - 7, currSquare - 14], 
+        [currSquare, currSquare - 1, currSquare - 2], 
+        [currSquare, currSquare + 5, currSquare + 10], 
+      ];
+    }
+
+    if(!MID.includes(currSquare)) {
+       linesMID = [
+        [currSquare, currSquare + 1, currSquare - 1],  
+        [currSquare, currSquare + 5, currSquare - 5], 
+        [currSquare, currSquare + 7, currSquare - 7],  
+      ];
+    }
+
+     linesI = [
+      [currSquare, currSquare - 6, currSquare - 6],  
+      [currSquare, currSquare + 6, currSquare - 6],  
+      [currSquare, currSquare + 6, currSquare + 6],  
+    ];
+
+    if (linesDIR.length) {
+      for (let i = 0; i < linesDIR.length; i++) {
+        
+        var [a, b, c] = linesDIR[i];
+
+        var allOK = [a , b , c].every(function(number) {
+          return number > 0 && number < 36;
+        });
+
+        if (allOK) {
+          if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+          }
+        }
+      }
+      return null;
+    }
+
+    if (linesESQ.length) {
+      for (let i = 0; i < linesESQ.length; i++) {
+        
+        var [a, b, c] = linesESQ[i];
+
+        var allOK = [a , b , c].every(function(number) {
+          return number > 0 && number < 36;
+        });
+
+        if (allOK) {
+          if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+          }
+        }
+      }
+      return null;
+    }
+
+    if (linesMID.length) {
+      for (let i = 0; i < linesMID.length; i++) {
+        
+        var [a, b, c] = linesMID[i];
+
+        var allOK = [a , b , c].every(function(number) {
+          return number > 0 && number < 36;
+        });
+
+        if (allOK) {
+          if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+          }
+        }
+      }
+      return null;
+    }
+
+      for (let i = 0; i < linesI.length; i++) {
+        
+        var [a, b, c] = linesI[i];
+
+        var allOK = [a , b , c].every(function(number) {
+          return number > 0 && number < 36;
+        });
+
+        if (allOK) {
+          if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+          }
+        }
+      }
+      return null;
+  }
 }
