@@ -11,6 +11,9 @@ export default function Board() {
 
   const[xIsNext, setXIsNext] = useState(true);
   const[squares, setSquares] = useState(Array(36).fill(null));
+  const DIR = [4 , 5 , 10 , 11 , 16 , 17 , 22 , 23 , 28 , 29 , 34 , 35];
+  const ESQ = [0 , 1 , 6 , 7 , 12 , 13 , 18 , 19 , 24 , 25 , 30 , 31];
+  const MID = [0 , 5 , 6 , 11 , 12 , 17 , 18 , 23 , 24 , 29 , 30 , 35];
 
   function handleClick(i) {
 
@@ -123,17 +126,81 @@ export default function Board() {
   );
 
   function calculateWinner(squares) {
-    const lines = [
-      [squares, squares + 5, squares + 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
+
+    const linesDIR = [];
+    const linesESQ = [];
+    const linesMID = [];
+    const linesI = [];
+
+    if (!DIR.includes(squares)) {
+       linesDIR = [
+        [squares, squares - 5, squares - 10], {/* ./ */}
+        [squares, squares + 1, squares + 2],  {/* .- */}
+        [squares, squares + 7, squares + 14], {/* .\ */}
+      ];
+    }
+    if(!ESQ.includes(squares)) {
+       linesESQ = [
+        [squares, squares - 7, squares - 14], {/* \. */}
+        [squares, squares - 1, squares - 2],  {/* -. */}
+        [squares, squares + 5, squares + 10], {/* /. */}
+      ];
+    }
+
+    if(!MID.includes(squares)) {
+       linesMID = [
+        [squares, squares + 1, squares - 1],  {/* - */}
+        [squares, squares + 5, squares - 5],  {/* / */}
+        [squares, squares + 7, squares - 7],  {/* \ */}
+      ];
+    }
+
+     linesI = [
+      [squares, squares - 6, squares - 6],  {/* | */}
+      [squares, squares + 6, squares - 6],  {/* | */}
+      [squares, squares + 6, squares + 6],  {/* | */}
     ];
-    console.log(lines[0]);
-    return;
+
+    if (linesDIR.length) {
+      for (let i = 0; i < linesDIR.length; i++) {
+        
+        const [a, b, c] = linesDIR[i];
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+          return squares[a];
+        }
+      }
+      return null;
+    }
+
+    if (linesESQ.length) {
+      for (let i = 0; i < linesESQ.length; i++) {
+        
+        const [a, b, c] = linesESQ[i];
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+          return squares[a];
+        }
+      }
+      return null;
+    }
+
+    if (linesDIR.length) {
+      for (let i = 0; i < linesDIR.length; i++) {
+        
+        const [a, b, c] = linesDIR[i];
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+          return squares[a];
+        }
+      }
+      return null;
+    }
+
+    for (let i = 0; i < linesDIR.length; i++) {
+        
+      const [a, b, c] = linesDIR[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+    return null;
   }
 }
