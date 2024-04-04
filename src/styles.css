@@ -1,10 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Scribble&display=swap');
+
 * {
   box-sizing: border-box;
-}
-
-body {
-  font-family: sans-serif;
-  margin: 20px;
+  margin: 0;
   padding: 0;
 }
 
@@ -51,9 +49,11 @@ ul {
 }
 
 body {
-  font-family: sans-serif;
-  margin: 20px;
-  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(./assets/img/BG_EN.png);
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
 }
 
 .square {
@@ -63,12 +63,12 @@ body {
   font-size: 24px;
   font-weight: bold;
   line-height: 34px;
-  height: 34px;
+  height: 45px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  width: 45px;
 }
 
 .board-row:after {
@@ -78,8 +78,22 @@ body {
 }
 
 .status {
-  margin-bottom: 10px;
+  display: flex;
+  width: 200px;
+  height: 100px;
+  position: relative;
+  top: 120px;
+  left: 60px;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgb(13, 86, 100) 100%);
+  font-size: 24px;
+  color: #fbf4ff;
+  font-family: 'Rubik Scribble';
+  font-weight: 600;
+  border-radius: 35px;
 }
+
 .game {
   display: flex;
   flex-direction: row;
@@ -87,4 +101,15 @@ body {
 
 .game-info {
   margin-left: 20px;
+}
+
+.win {
+  background-color: aquamarine;
+}
+
+.board {
+  display: block;
+  position: relative;
+  left: 2vw;
+  top: 100px;
 }
